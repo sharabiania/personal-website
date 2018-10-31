@@ -13,7 +13,7 @@ module.exports = function(app) {
 	app.get('/blog', function(req, res){
 		bm.getAll(function(dbres){
 			console.log(dbres[0].title);
-			res.render('blog', {'blogs':dbres});
+			res.render('blog-manage', {'blogs':dbres});
 		});
 		
 	});
