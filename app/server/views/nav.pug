@@ -1,13 +1,16 @@
 ul.nav.justify-content-center
 	li.nav-item
-		a.nav-link.active(href='#') Home
+		a.nav-link.active(href='/') Home
 	li.nav-item
 		a.nav-link(href='/blog') Blog
 	li.nav-item
 		a.nav-link.disabled(href='#') Projects
 	li.nav-item
 		a.nav-link.disabled(href='#') Contact
-	if authenticated
+	if(authenticated)
 		li.nav-item
 			a.nav-link(href='/logout') Log out
+	else 
+		li.nav-item
+			a.nav-link(href='/login') Log In
 

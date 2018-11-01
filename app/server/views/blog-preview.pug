@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+	if(preview)
+		.text-right
+			a.btn.btn-light(href='/blog') Exit preview
+		br
+	for val in blogs
+		.card
+			.card-body
+				h4.card-title #{val.title}
+				small.blockquote-footer #{val.created}
+				p.card-text #{val.desc }
+				
+			.card-footer.text-right
+				a.card-link(href='#') like
+				|  (0 people like this)
+				
+		hr
+
+	

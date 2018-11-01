@@ -3,11 +3,15 @@ var passport = require('passport');
 module.exports = function (app) {
 
 	app.get('/', function (req, res) {
-		res.render('index', { title: 'Hey', message: 'Hello there!' });
+		var isauth = false;
+		if (req.user) isauth = true;
+		res.render('index', { title: 'Hey', message: 'Hello there!', 'authenticated': isauth });
 	});
 
 	app.get('/login', function (req, res) {
-		res.render('login');
+		var isauth = false;
+		if (req.user) isauth = true;
+		res.render('login', { 'authenticated': isauth });
 	});
 
 	app.post('/login',
@@ -23,6 +27,7 @@ module.exports = function (app) {
 	});
 
 	// TODO move this
+	// Handle redirecturl in query string.
 	function loggedIn(req, res, next) {
 		if (req.user) {
 			next();
@@ -32,17 +37,30 @@ module.exports = function (app) {
 	}
 
 	app.get('/blog',
-		loggedIn,
 		function (req, res) {
 			bm.getAll(function (dbres) {
-				res.render('blog-manage', { 'blogs': dbres });
+				var preview = false;
+				if (req.query.p == 1) {
+					preview = true;
+				}
+				if (req.user) {
+					if (preview) {
+						res.render('blog-preview', { 'blogs': dbres, 'authenticated': true, 'preview': true });
+					}
+					else
+						res.render('blog-manage', { 'blogs': dbres, 'authenticated': true });
+				}
+				else
+					res.render('blog-preview', { 'blogs': dbres, 'authenticated': false, 'preview': false });
 			});
 
 		});
 
-	app.get('/blog/create', function (req, res) {
-		res.render('blog-create');
-	});
+	app.get('/blog/create',
+		loggedIn,
+		function (req, res) {
+			res.render('blog-create', { 'authenticated': true });
+		});
 
 	app.post('/api/blog', function (req, res) {
 		bm.post({ 'title': req.body.title, 'desc': req.body.desc },

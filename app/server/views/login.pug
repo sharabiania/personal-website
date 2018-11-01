@@ -5,11 +5,15 @@ block content
 		.col-4.offset-4
 			.card
 				.card-body
-					form(action='/login', method='post')
-						.form-group
-							label(for='username') Email:
-							input.form-control.form-control-lg(id='username', placeholder='email', required='required', name='username')
-						.form-group
-							label(for='password') Password:
-							input.form-control.form-control-lg(id='password', placeholder='password', type='password', required='required', name='password')
-						button.btn.btn-dark.btn-lg(type='submit', tabindex='1', autofocus, style='width:100%;') Login
+					if !authenticated
+						form(action='/login', method='post')
+							.form-group
+								label(for='username') Email:
+								input.form-control.form-control-lg(id='username', placeholder='email', required='required', name='username')
+							.form-group
+								label(for='password') Password:
+								input.form-control.form-control-lg(id='password', placeholder='password', type='password', required='required', name='password')
+							button.btn.btn-dark.btn-lg.btn-block(type='submit', tabindex='1', autofocus) Login
+					else
+						p.card-text You are already logged in.
+						a.btn.btn-dark.btn-lg.btn-block(href='/logout') Log Out

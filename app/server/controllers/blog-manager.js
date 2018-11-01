@@ -1,11 +1,13 @@
 var mongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
+var ISODate = require('mongodb').ISODate;
 
 process.env.DB_URL = 'mongodb://localhost:27017/';
 process.env.DB_NAME = 'personal-website';
 
 module.exports = {
 	post: function(blogObj, callback) {
+		blogObj.created = (new Date()).toISOString();
 		mongoClient.connect(process.env.DB_URL, function(err, db){
 			if(err) throw err;
 			var dbo = db.db(process.env.DB_NAME);

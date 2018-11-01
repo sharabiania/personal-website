@@ -2,8 +2,10 @@ extends layout
 
 block content
 
-	div(style='text-align: right')
+	div.text-right
 		a.btn.btn-light(href='/blog/create') Write a new blog
+		| 
+		a.btn.btn-light(href='/blog?p=1') Preview
 	br
 	table.table
 		for val in blogs
