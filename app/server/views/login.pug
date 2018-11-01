@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	form(action='/login', method='post')
+		input.form-control(placeholder='email', required='required', name='username')
+		input.form-control(placeholder='password', type='password', required='required', name='password')
+		button.btn.btn-dark(type='submit', tabindex='1', autofocus) Login

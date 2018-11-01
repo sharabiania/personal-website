@@ -17,5 +17,17 @@ Project is build using NodeJS, MongoDB
 - `npm install express`
 - `npm install mongodb`
 - `npm install pug`
+- `npm install express-session`
+- `npm install passport`
 ## Run
 - `node app.js`
+
+# Contribute
+You are welcome to contribute by:
+- Creating issues / suggestions
+- Creating Pull Request for
+	- bug fixes
+	- new features
+	- improvment
+	- documentation
+- Reviewing Pull Requests
