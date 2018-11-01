@@ -38,7 +38,9 @@ module.exports = function (app) {
 
 	app.get('/blog',
 		function (req, res) {
-			bm.getAll(function (dbres) {
+			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+			bm.getAll(ip, function (dbres) {
 				var preview = false;
 				if (req.query.p == 1) {
 					preview = true;
@@ -71,7 +73,9 @@ module.exports = function (app) {
 	});
 
 	app.get('/api/blog', function (req, res) {
-		bm.getAll(function (dbres) {
+		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	
+		bm.getAll(ip, function (dbres) {
 			res.send(dbres);
 		});
 	});
@@ -80,5 +84,13 @@ module.exports = function (app) {
 		bm.remove(req.params.id, function (dbres) {
 			res.send(dbres);
 		});
+	});
+
+	app.post('/api/blog/like/:id', function(req, res){
+		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	
+		bm.like(req.params.id, ip, function(dbres){
+			res.send(dbres);
+		})
 	});
 }

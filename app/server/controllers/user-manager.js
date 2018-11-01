@@ -6,7 +6,6 @@ process.env.DB_URL = 'mongodb://localhost:27017/';
 process.env.DB_NAME = 'personal-website';
 
 exports.findByUsername = function(username, cb) {
-	console.log('user manager...');
 	mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
 		if(err) throw err;
 		var dbo = db.db(process.env.DB_NAME);

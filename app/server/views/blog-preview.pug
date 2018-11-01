@@ -14,9 +14,31 @@ block content
 				p.card-text #{val.desc }
 				
 			.card-footer.text-right
-				a.card-link(href='#') like
-				|  (0 people like this)
+				if val.liked
+					span you liked this.
+				else 
+					button.card-link(onclick='bloglike("'+ val._id +'")') like
+				|  (
+				strong  #{val.numOfLikes}
+				|  people like this)
 				
 		hr
 
-	
+	block scripts
+		script.
+			function bloglike(id){
+				var span = event.target.nextElementSibling;
+			
+				$.ajax({
+						type: "POST",
+						url: '/api/blog/like/' + id,
+						contentType: 'application/json',
+						dataType: 'json',
+						success: function (res) {			
+							span.innerText = res.likes.length;
+						},
+						error: function(res){
+							console.log(res);
+						}
+					});
+			}
