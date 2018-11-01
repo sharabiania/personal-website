@@ -31,3 +31,4 @@ You are welcome to contribute by:
 	- improvment
 	- documentation
 - Reviewing Pull Requests
+- Look for `TODO` tags in the code and complete them.

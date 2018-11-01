@@ -4,12 +4,13 @@ var um = require('../controllers/user-manager.js');
 
 module.exports = function (app) {
 	// TODO: investigate why maxAge doesn't work.
-	app.use(require('express-session')({ 
-		name:'auth', 
+	app.use(require('express-session')({
+		name: 'auth',
 		secret: 'keyboard cat',
 		maxAge: 60000,
-		resave: false, 
-		saveUninitialized: false }));
+		resave: false,
+		saveUninitialized: false
+	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 
@@ -32,8 +33,7 @@ module.exports = function (app) {
 			if (!user) {
 				return cb(null, false);
 			}
-			if (user.password != password) 
-			{
+			if (user.password != password) {
 				return cb(null, false);
 			}
 			return cb(null, user);
