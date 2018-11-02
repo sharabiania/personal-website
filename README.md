@@ -24,6 +24,7 @@ Project is build using NodeJS, MongoDB
 
 # Contribute
 You are welcome to contribute by:
+- Work on tasks [here](https://github.com/sharabiania/blogs/projects/1)
 - Creating issues / suggestions
 - Creating Pull Request for
 	- bug fixes
