@@ -11,7 +11,7 @@ block content
 			.card-body
 				h4.card-title #{val.title}
 				small.blockquote-footer #{val.created}
-				p.card-text #{val.desc }
+				p.card-text !{val.desc }
 				
 			.card-footer.text-right
 				a.card-link(href='javascript:void(0);' class=val.liked? '':'d-none' onclick='blogunlike("' + val._id + '")') unlike
