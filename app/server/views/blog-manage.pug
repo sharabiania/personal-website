@@ -20,7 +20,7 @@ block content
 block scripts
 	script.
 		function removeBlog(id){
-			var td = event.target.parentNode;
+			var td = event.target.parentNode.parentNode;
 			td.style.display = 'none';
 			$.ajax
 		    ({
