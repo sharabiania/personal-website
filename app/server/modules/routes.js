@@ -93,4 +93,12 @@ module.exports = function (app) {
 			res.send(dbres);
 		})
 	});
+
+	app.post('/api/blog/unlike/:id', function(req, res){
+		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	
+		bm.unlike(req.params.id, ip, function(dbres){
+			res.send(dbres);
+		})
+	});
 }

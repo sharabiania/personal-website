@@ -14,13 +14,11 @@ block content
 				p.card-text #{val.desc }
 				
 			.card-footer.text-right
-				if val.liked
-					span you liked this.
-				else 
-					button.card-link(onclick='bloglike("'+ val._id +'")') like
+				a.card-link(href='javascript:void(0);' class=val.liked? '':'d-none' onclick='blogunlike("' + val._id + '")') unlike
+				a.card-link(href='javascript:void(0);' class=val.liked? 'd-none':'' onclick='bloglike("'+ val._id +'")') like
 				|  (
 				strong  #{val.numOfLikes}
-				|  people like this)
+				|  people liked this)
 				
 		hr
 
@@ -28,7 +26,9 @@ block content
 		script.
 			function bloglike(id){
 				var span = event.target.nextElementSibling;
-			
+				var likebtn = event.target;
+				var unlikebtn = likebtn.previousElementSibling;
+
 				$.ajax({
 						type: "POST",
 						url: '/api/blog/like/' + id,
@@ -36,6 +36,27 @@ block content
 						dataType: 'json',
 						success: function (res) {			
 							span.innerText = res.likes.length;
+							likebtn.classList.add('d-none');
+							unlikebtn.classList.remove('d-none');
+						},
+						error: function(res){
+							console.log(res);
+						}
+					});
+			}
+			function blogunlike(id){
+				var span = event.target.nextElementSibling.nextElementSibling;
+				var unlikebtn = event.target;
+				var likebtn = unlikebtn.nextElementSibling;
+				$.ajax({
+						type: "POST",
+						url: '/api/blog/unlike/' + id,
+						contentType: 'application/json',
+						dataType: 'json',
+						success: function (res) {			
+							span.innerText = res.likes.length;
+							likebtn.classList.remove('d-none');
+							unlikebtn.classList.add('d-none');
 						},
 						error: function(res){
 							console.log(res);

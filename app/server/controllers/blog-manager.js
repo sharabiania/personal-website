@@ -82,6 +82,25 @@ module.exports = {
 			);
 			
 		});
+	},
+
+	unlike: function(id, uip, cb) {
+		mongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (err, db) {
+			if (err) throw err;
+			var dbo = db.db(process.env.DB_NAME);
+			dbo.collection('blogs').findOneAndUpdate(
+				{_id:ObjectId(id)},
+				{$pull: {likes: {ip: uip}}},
+				{projection: {likes: 1},
+				returnOriginal: false},
+				function(err, res){
+					if(err) throw err;
+					db.close();
+					cb(res.value);
+				}
+			);
+			
+		});
 	}
 }
 
