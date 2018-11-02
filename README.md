@@ -1,4 +1,4 @@
-# Blogs
+# Description
 A simple personal blog website, that can be used as a template for website and REST API development.
 
 Technologies and tools used in this project:
