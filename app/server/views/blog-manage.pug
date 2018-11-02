@@ -13,7 +13,9 @@ block content
 				td #{val.title}
 				td #{val.desc }
 				td
-					button.btn.btn-danger.btn-sm(onclick='removeBlog("'+ val._id +'")') Delete
+					div.btn-group.btn-group-sm(role='group')
+						a.btn.btn-warning.btn-sm(href='/blog/update/'+val._id) Update
+						button.btn.btn-danger.btn-sm(onclick='removeBlog("'+ val._id +'")') Delete
 
 block scripts
 	script.

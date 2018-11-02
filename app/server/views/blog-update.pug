@@ -1,0 +1,34 @@
+extends layout
+
+block content
+	.card
+		.card-body
+			input.form-control(id='title', placeholder='Blog Title', value=b.title)
+			br
+			textarea.form-control(id='desc', rows='10', placeholder='Write your blog here, html permitted.') !{b.desc}
+			br
+			div(style='text-align:right')
+				a.btn.btn-light(href='/blog') Cancel
+				| 
+				a.btn.btn-dark(href='#') Preview
+				| 
+				button.btn.btn-primary(onclick='updateblog("'+b._id+'")') Update
+					
+block scripts
+	script.
+		function updateblog()
+		{
+			var data = {'title' : $('#title').val(), 'desc' : $('#desc').val() }; 
+			$.ajax
+		    ({
+		        type: "PUT",
+		        //the url where you want to sent the userName and password to
+				url: '/api/blog/' + "#{b._id}",
+				contentType: 'application/json',
+		        dataType: 'json',
+		        data: JSON.stringify(data),
+		        success: function () {
+		       		document.location.href = '/blog';
+		        }
+		    })
+		}

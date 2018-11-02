@@ -61,9 +61,19 @@ module.exports = function (app) {
 	app.get('/blog/create',
 		loggedIn,
 		function (req, res) {
-			res.render('blog-create', { 'authenticated': true });
+			res.render('blog-create');
 		});
 
+	app.get('/blog/update/:id',
+		// TODO:	loggedIn,
+		function (req, res) {
+			bm.getOne(req.params.id, function (dbres) {
+				res.render('blog-update', { b: dbres });
+			});
+
+		});
+
+	// TODO: Authorize the api call.
 	app.post('/api/blog', function (req, res) {
 		bm.post({ 'title': req.body.title, 'desc': req.body.desc },
 			function (dbres) {
@@ -72,9 +82,18 @@ module.exports = function (app) {
 
 	});
 
+	// TODO: Authorize the api call.
+	app.put('/api/blog/:id', function (req, res) {
+		bm.update(req.params.id,
+			{ 'title': req.body.title, 'desc': req.body.desc },
+			function (dbres) {
+				res.send(dbres);
+			});
+	});
+
 	app.get('/api/blog', function (req, res) {
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	
+
 		bm.getAll(ip, function (dbres) {
 			res.send(dbres);
 		});
@@ -86,18 +105,18 @@ module.exports = function (app) {
 		});
 	});
 
-	app.post('/api/blog/like/:id', function(req, res){
+	app.post('/api/blog/like/:id', function (req, res) {
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	
-		bm.like(req.params.id, ip, function(dbres){
+
+		bm.like(req.params.id, ip, function (dbres) {
 			res.send(dbres);
 		})
 	});
 
-	app.post('/api/blog/unlike/:id', function(req, res){
+	app.post('/api/blog/unlike/:id', function (req, res) {
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	
-		bm.unlike(req.params.id, ip, function(dbres){
+
+		bm.unlike(req.params.id, ip, function (dbres) {
 			res.send(dbres);
 		})
 	});
