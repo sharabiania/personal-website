@@ -1,6 +1,10 @@
 var http = require('http');
 var express = require('express');
 var app = express();
+var fileUpload = require('express-fileupload');
+app.use(fileUpload({
+	limits: { fileSize: 50 * 1024 * 1024 },
+  }));
 
 require('./app/server/modules/auth')(app);
 

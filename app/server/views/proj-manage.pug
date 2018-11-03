@@ -1,0 +1,42 @@
+extends layout
+
+block content
+
+	div.text-right
+		a.btn.btn-light(href='/project/create') Add a new project
+		| 
+		a.btn.btn-light(href='/project?p=1') Preview
+	br
+	table.table
+		for val in projs
+			tr
+				td #{val.title}
+				td #{val.desc }
+				td
+					div.btn-group.btn-group-sm(role='group')
+						a.btn.btn-warning.btn-sm(href='/project/update/'+val._id) Update
+						button.btn.btn-danger.btn-sm(onclick='removeBlog("'+ val._id +'")') Delete
+
+block scripts
+	script.
+		function removeBlog(id){
+			var td = event.target.parentNode.parentNode;
+			td.style.display = 'none';
+			$.ajax
+		    ({
+		        type: "DELETE",
+				url: '/api/project/' + id,
+				contentType: 'application/json',
+		        dataType: 'json',    
+		        success: function (res) {			
+					   var tr = td.parentNode;
+					   tr.parentNode.removeChild(tr);
+				},
+				error: function(res){
+					td.style.display = '';
+					console.log(res);
+				}
+				
+		    })
+		}
+			
