@@ -1,4 +1,4 @@
-extends layout
+extends ../shared/layout
 
 block content
 
@@ -6,16 +6,19 @@ block content
 		.text-right
 			a.btn.btn-light(href='/blog') Exit preview
 		br
-	for val in blogs
+	for val in projs
 		.card
+			if val.images
+				img.card-img-top(src=val.images[0].uri, alt="project screenshot")
+
 			.card-body
 				h4.card-title #{val.title}
 				small.blockquote-footer.text-right(class='r-date') #{val.updated || val.created}
-				p.card-text !{val.desc }
+				p.card-text !{val.desc}
 				
 			.card-footer.text-right
-				a.card-link(href='javascript:void(0);' class=val.liked? '':'d-none' onclick='blogunlike("' + val._id + '")') unlike
-				a.card-link(href='javascript:void(0);' class=val.liked? 'd-none':'' onclick='bloglike("'+ val._id +'")') like
+				a.card-link(href='javascript:void(0);' class=val.liked? '':'d-none' onclick='projunlike("' + val._id + '")') unlike
+				a.card-link(href='javascript:void(0);' class=val.liked? 'd-none':'' onclick='projlike("'+ val._id +'")') like
 				|  (
 				strong  #{val.numOfLikes}
 				|  people liked this)
@@ -25,14 +28,14 @@ block content
 
 block scripts
 	script.
-			function bloglike(id){
+			function projlike(id){
 				var span = event.target.nextElementSibling;
 				var likebtn = event.target;
 				var unlikebtn = likebtn.previousElementSibling;
 
 				$.ajax({
 						type: "POST",
-						url: '/api/blog/like/' + id,
+						url: '/api/project/like/' + id,
 						contentType: 'application/json',
 						dataType: 'json',
 						success: function (res) {			
@@ -45,13 +48,13 @@ block scripts
 						}
 					});
 			}
-			function blogunlike(id){
+			function projunlike(id){
 				var span = event.target.nextElementSibling.nextElementSibling;
 				var unlikebtn = event.target;
 				var likebtn = unlikebtn.nextElementSibling;
 				$.ajax({
 						type: "POST",
-						url: '/api/blog/unlike/' + id,
+						url: '/api/project/unlike/' + id,
 						contentType: 'application/json',
 						dataType: 'json',
 						success: function (res) {			

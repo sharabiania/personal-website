@@ -6,7 +6,7 @@ app.use(fileUpload({
 	limits: { fileSize: 50 * 1024 * 1024 },
   }));
 
-require('./app/server/modules/auth')(app);
+// require('./app/server/modules/auth')(app);
 
 app.set('port', process.env.PORT || 4000);
 app.set('views', __dirname + '/app/server/views');
