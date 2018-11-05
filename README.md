@@ -22,6 +22,9 @@ Project is build using NodeJS, MongoDB.
 - `npm install passport`
 - `npm install passport-local`
 ## Run
+- Start NodeJS.
+- Start MongoDB.
+	- On Linux: `sudo service mongod start`.
 - `node app.js`
 - Navigate to `localhost:4000` in your browser.
 
