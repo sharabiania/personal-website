@@ -21,6 +21,11 @@ Project is build using NodeJS, MongoDB.
 - `npm install pug`
 - `npm install passport`
 - `npm install passport-local`
+## Initialize Database
+- Create a database in MongoDB called `personal-website`.
+	- `use personal-website`
+- Create a collection `users` and add a user:
+	- `db.insertOne({username:"admin", password: "123"})`.
 ## Run
 - Start NodeJS.
 - Start MongoDB.
