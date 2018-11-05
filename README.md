@@ -1,5 +1,5 @@
 # Description
-A simple personal blog website, that can be used as a template for website and REST API development.
+A minimal personal resume/blog/website, with admin controls that can also be used as a template to develop other websites and REST APIs.
 
 Technologies and tools used in this project:
 - NodeJS
