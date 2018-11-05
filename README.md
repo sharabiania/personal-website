@@ -15,10 +15,12 @@ Project is build using NodeJS, MongoDB
 - Install MongoDB
 ## Install Node packages
 - `npm install express`
+- `npm install express-fileupload`
+- `npm install express-session`
 - `npm install mongodb`
 - `npm install pug`
-- `npm install express-session`
 - `npm install passport`
+- `npm install passport-local`
 ## Run
 - `node app.js`
 
