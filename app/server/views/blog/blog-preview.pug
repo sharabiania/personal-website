@@ -6,7 +6,8 @@ block content
 		.text-right
 			a.btn.btn-light(href='/blog') Exit preview
 		br
-	for val in blogs
+	each val, index in blogs
+		- comments = val.comments
 		.card
 			.card-body
 				h4.card-title #{val.title}
@@ -14,12 +15,29 @@ block content
 				p.card-text !{val.desc }
 				
 			.card-footer.text-right
+				a.card-link(data-toggle='collapse' href='#com-' + index) comments
 				a.card-link(href='javascript:void(0);' class=val.liked? '':'d-none' onclick='blogunlike("' + val._id + '")') unlike
 				a.card-link(href='javascript:void(0);' class=val.liked? 'd-none':'' onclick='bloglike("'+ val._id +'")') like
 				|  (
 				strong  #{val.numOfLikes}
 				|  people liked this)
-				
+				.collapse(id='com-' + index)
+					hr
+					form.input-group(onsubmit='sendComment("' + val._id + '",' + index +')')
+						textarea.form-control(id='txt-' + index autofocus rows='2' cols='50' maxlength='150' required='required' style='resize:none' placeholder='Leave a comment')
+						.input-group-append
+							button.btn.btn-outline-secondary(type='submit') Comment
+					
+					if val.comments
+						hr
+						ul.list-unstyled.small.text-left.text-monospace
+							each com in val.comments
+								li
+									small
+										i(class='r-date') #{com.on}
+										| &nbsp;- 
+										| #{com.message}		
+										
 		hr
 	//- END for loop
 
@@ -61,6 +79,29 @@ block scripts
 						},
 						error: function(res){
 							console.log(res);
+						}
+					});
+			}
+			function sendComment(id, index){
+					var btn = event.target;
+					btn.disabled = 'disabled';
+					var msg = document.getElementById('txt-' + index).value;
+					if(!msg) return; // TODO: validation.
+					msg = msg.trim();
+					$.ajax({
+						type: "POST",
+						url: '/api/blog/comment/' + id,
+						contentType: 'application/json',
+						dataType: 'json',
+						data: JSON.stringify({message: msg}),
+						success: function (res) {			
+							// TODO: refresh the comments section?
+						},
+						error: function(res){
+							console.log(res);
+						},
+						complete: function(res) {
+							btn.disabled = '';
 						}
 					});
 			}

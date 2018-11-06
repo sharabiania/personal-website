@@ -92,7 +92,7 @@ module.exports = function (collectionName) {
 				var dbo = db.db(process.env.DB_NAME);
 				dbo.collection(collectionName).findOneAndUpdate(
 					{ _id: ObjectId(id) },
-					{ $addToSet: { likes: { ip: uip } } },
+					{ $addToSet: { likes: { ip: uip, on: (new Date()).toISOString() } } },
 					{
 						projection: { likes: 1 },
 						returnOriginal: false
@@ -126,7 +126,28 @@ module.exports = function (collectionName) {
 				);
 
 			});
-		}
+		},
+
+		comment: function (id, uip, msg, cb) {
+			mongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (err, db) {
+				if (err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				dbo.collection(collectionName).findOneAndUpdate(
+					{ _id: ObjectId(id) },
+					{ $addToSet: { comments: { ip: uip, on: (new Date()).toISOString(), message : msg } } },
+					{
+						projection: { comments: 1 },
+						returnOriginal: false
+					},
+					function (err, res) {
+						if (err) throw err;
+						db.close();
+						cb(res.value);
+					}
+				);
+
+			});
+		},
 	}
 	return module;
 }

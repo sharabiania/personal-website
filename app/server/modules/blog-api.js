@@ -41,7 +41,7 @@ module.exports = function (loggedIn) {
 
 		bm.like(req.params.id, ip, function (dbres) {
 			res.send(dbres);
-		})
+		});
 	});
 
 	router.post('/api/blog/unlike/:id', function (req, res) {
@@ -49,7 +49,15 @@ module.exports = function (loggedIn) {
 
 		bm.unlike(req.params.id, ip, function (dbres) {
 			res.send(dbres);
-		})
+		});
+	});
+
+	router.post('/api/blog/comment/:id', function(req, res){
+		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		console.log(req.body.message);
+		bm.comment(req.params.id, ip, req.body.message, function(dbres){
+			res.send(dbres);
+		});
 	});
 	/** END Blog APIs */
 

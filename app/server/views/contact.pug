@@ -16,9 +16,9 @@ block content
 					.input-group
 						.input-group-prepend
 							span.input-group-text Send me a message
-						textarea.form-control(name='message' rows='2' cols='50' maxlength='150' required='required' style='resize:none' placeholder='Please include a name and email so I can get back to you.')
+						textarea.form-control(autofocus name='message' rows='2' cols='50' maxlength='150' required='required' style='resize:none' placeholder='Please include a name and email so I can get back to you.')
 						.input-group-append
-							button.btn.btn-outline-secondary(type='submit' autofocus) Send
+							button.btn.btn-outline-secondary(type='submit') Send
 			
 		else
 			.alert.alert-success.alert-dismissible.fade.show(role='alert') Your'e message has been sent.
