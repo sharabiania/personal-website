@@ -6,14 +6,21 @@ block content
 			.card
 				.card-body
 					if !authenticated
-						form(action='/login', method='post')
+						form(action='/login', method='post' onsubmit='login()')
 							.form-group
 								label(for='username') Email:
 								input.form-control.form-control-lg(id='username', placeholder='email', required='required', name='username')
 							.form-group
 								label(for='password') Password:
 								input.form-control.form-control-lg(id='password', placeholder='password', type='password', required='required', name='password')
-							button.btn.btn-dark.btn-lg.btn-block(type='submit', tabindex='1', autofocus) Login
+							button.btn.btn-success.btn-lg.btn-block(id='btn' type='submit', tabindex='1', autofocus) Login
 					else
 						p.card-text You are already logged in.
-						a.btn.btn-dark.btn-lg.btn-block(href='/logout') Log Out
+						a.btn.btn-success.btn-lg.btn-block(href='/logout') Log Out
+block scripts
+	script.
+		function login(){
+			var btn = document.getElementById('btn');
+			btn.disabled = true;
+			btn.innerText = 'Logging in...';
+		}
