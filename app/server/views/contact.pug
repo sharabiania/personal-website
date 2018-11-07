@@ -16,10 +16,14 @@ block content
 					mark sharabiani.a#8099
 				li.list-group-item
 					a(href='https://github.com/sharabiania/blogs/issues/new') Report issues on this website
+				li.list-group-item
+					a(href='https://github.com/sharabiania/blogs') Contribute to the source of this website
+					br
+					i.small.text-secondary Good way to learn :)
 				if !sent
 					li.list-group-item
 						form(method='POST' action='contact')
-							.input-group
+							.input-group.input-group-sm
 								.input-group-prepend
 									span.input-group-text Send me a message
 								textarea.form-control(autofocus name='message' rows='2' cols='50' maxlength='150' required='required' style='resize:none' placeholder='Please include a name and email so I can get back to you.')
