@@ -1,29 +1,35 @@
 extends ./shared/layout
 
 block content
-	p 
-		i Get in touch...
-	.list-group
-		a.list-group-item.list-group-item-action(href='https://github.com/sharabiania') GitHub
-		a.list-group-item.list-group-item-action(href='https://stackoverflow.com/users/4505446/a-sharabiani') stackoverflow
-		a.list-group-item.list-group-item-action(href='https://www.chess.com/member/sharabiani-a') Let's play chess!
-		.list-group-item Discord: 
-				mark sharabiani.a#8099
-		a.list-group-item.list-group-item-action(href='https://github.com/sharabiania/blogs/issues/new') Report issues on this website
-		if !sent
-			.list-group-item
-				form(method='POST' action='contact')
-					.input-group
-						.input-group-prepend
-							span.input-group-text Send me a message
-						textarea.form-control(autofocus name='message' rows='2' cols='50' maxlength='150' required='required' style='resize:none' placeholder='Please include a name and email so I can get back to you.')
-						.input-group-append
-							button.btn.btn-outline-secondary(type='submit') Send
-			
-		else
-			.alert.alert-success.alert-dismissible.fade.show(role='alert') Your'e message has been sent.
-				button.close(type='button', data-dismiss='alert', aria-label='Close')
-					span(aria-hidden='true') &times;
+	.row
+		.col-8.offset-2
 		
+			ul.list-group.list-group-flush.text-center
+				li.list-group-item.list-group-item-light Get in touch:
+				li.list-group-item
+					a(href='https://github.com/sharabiania') GitHub
+				li.list-group-item
+					a(href='https://stackoverflow.com/users/4505446/a-sharabiani') Stack Overflow
+				li.list-group-item
+					a(href='https://www.chess.com/member/sharabiani-a') Let's play chess!
+				li.list-group-item Discord: 
+					mark sharabiani.a#8099
+				li.list-group-item
+					a(href='https://github.com/sharabiania/blogs/issues/new') Report issues on this website
+				if !sent
+					li.list-group-item
+						form(method='POST' action='contact')
+							.input-group
+								.input-group-prepend
+									span.input-group-text Send me a message
+								textarea.form-control(autofocus name='message' rows='2' cols='50' maxlength='150' required='required' style='resize:none' placeholder='Please include a name and email so I can get back to you.')
+								.input-group-append
+									button.btn.btn-outline-secondary(type='submit') Send
+					
+				else
+					.alert.alert-success.alert-dismissible.fade.show(role='alert') Your'e message has been sent.
+						button.close(type='button', data-dismiss='alert', aria-label='Close')
+							span(aria-hidden='true') &times;
+			
 
 	
