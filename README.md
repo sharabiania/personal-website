@@ -25,7 +25,7 @@ Project is build using NodeJS, MongoDB.
 - Create a database in MongoDB called `personal-website`.
 	- `use personal-website`
 - Create a collection `users` and add a user:
-	- `db.insertOne({username:"admin", password: "123"})`.
+	- `db.users.insertOne({username:"admin", password: "123"})`.
 ## Run
 - Start NodeJS.
 - Start MongoDB.
