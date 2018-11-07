@@ -18,6 +18,8 @@ block scripts
 	script.
 		function postblog()
 		{
+			event.target.disabled = 'disabled';
+			event.target.innerText = 'Posting...';
 			var data = {'title' : $('#title').val(), 'desc' : $('#desc').val() }; 
 			$.ajax
 		    ({

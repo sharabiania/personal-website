@@ -10,8 +10,11 @@ block content
 	table.table
 		for val in blogs
 			tr
-				td #{val.title}
-				td #{val.desc }
+				td 
+					.media
+						.media-body
+							h5.mr-3 #{val.title}
+							| #{val.desc }
 				td
 					div.btn-group.btn-group-sm(role='group')
 						a.btn.btn-warning.btn-sm(href='/blog/update/'+val._id) Update

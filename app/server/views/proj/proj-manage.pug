@@ -10,8 +10,13 @@ block content
 	table.table
 		for val in projs
 			tr
-				td #{val.title}
-				td #{val.desc }
+				td 
+					.media
+						if val.images
+							img.mr-3(width='64' src=val.images[0].uri)
+						.media-body
+							h5.mt-0 #{val.title}
+							| #{val.desc }
 				td
 					div.btn-group.btn-group-sm(role='group')
 						a.btn.btn-warning.btn-sm(href='/project/update/'+val._id) Update
