@@ -1,14 +1,12 @@
 var pm = require('../controllers/db-manager')('projects');
+var protected = require('../modules/auth').protectAPI;
 
-module.exports = function (loggedIn) {
+module.exports = (function () {
 
 	var router = require('express').Router();
 	/** Project API */
 
-	
-
-	// TODO: Authorize the api call.
-	router.put('/api/project/:id', function (req, res) {
+	router.put('/api/project/:id', protected, function (req, res) {
 		pm.update(req.params.id,
 			{ 'title': req.body.title, 'desc': req.body.desc },
 			function (dbres) {
@@ -24,7 +22,7 @@ module.exports = function (loggedIn) {
 		});
 	});
 
-	router.delete('/api/project/:id', function (req, res) {
+	router.delete('/api/project/:id', protected, function (req, res) {
 		pm.remove(req.params.id, function (dbres) {
 			res.send(dbres);
 		});
@@ -47,4 +45,4 @@ module.exports = function (loggedIn) {
 	});
 	/** END Project API */
 	return router;
-}
+})();

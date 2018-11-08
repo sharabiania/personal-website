@@ -1,6 +1,7 @@
 var bm = require('../controllers/db-manager')('blogs');
+var protected = require('../modules/auth').protectView;
 
-module.exports = function (loggedIn) {
+module.exports = (function () {
 	var router = require('express').Router();
 	/** Blog Views */
 	router.get('/',
@@ -26,13 +27,12 @@ module.exports = function (loggedIn) {
 		});
 
 	router.get('/create',
-		loggedIn,
+		protected,
 		function (req, res) {
 			res.render('blog/blog-create');
 		});
 
-	router.get('/update/:id',
-		// TODO:	loggedIn,
+	router.get('/update/:id', protected,
 		function (req, res) {
 			bm.getOne(req.params.id, function (dbres) {
 				res.render('blog/blog-update', { b: dbres });
@@ -44,4 +44,4 @@ module.exports = function (loggedIn) {
 
 
 	return router;
-}
+})();

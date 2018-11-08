@@ -1,11 +1,11 @@
 var bm = require('../controllers/db-manager')('blogs');
+var protected = require('../modules/auth').protectAPI;
 
-module.exports = function (loggedIn) {
+module.exports = (function () {
 	var router = require('express').Router();
 	/** Blog APIs */
 
-	// TODO: Authorize the api call.
-	router.post('/api/blog', function (req, res) {
+	router.post('/api/blog', protected, function (req, res) {
 		bm.post({ 'title': req.body.title, 'desc': req.body.desc },
 			function (dbres) {
 				res.send(dbres);
@@ -13,9 +13,8 @@ module.exports = function (loggedIn) {
 
 	});
 
-	// TODO: Authorize the api call.
-	router.put('/api/blog/:id', function (req, res) {
-		bm.update(req.params.id,
+	router.put('/api/blog/:id', protected, function (req, res) {
+		bm.update(req.params.id, 
 			{ 'title': req.body.title, 'desc': req.body.desc },
 			function (dbres) {
 				res.send(dbres);
@@ -30,7 +29,7 @@ module.exports = function (loggedIn) {
 		});
 	});
 
-	router.delete('/api/blog/:id', function (req, res) {
+	router.delete('/api/blog/:id',protected, function (req, res) {
 		bm.remove(req.params.id, function (dbres) {
 			res.send(dbres);
 		});
@@ -54,7 +53,6 @@ module.exports = function (loggedIn) {
 
 	router.post('/api/blog/comment/:id', function(req, res){
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		console.log(req.body.message);
 		bm.comment(req.params.id, ip, req.body.message, function(dbres){
 			res.send(dbres);
 		});
@@ -62,4 +60,4 @@ module.exports = function (loggedIn) {
 	/** END Blog APIs */
 
 	return router;
-}
+})();

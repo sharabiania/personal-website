@@ -1,6 +1,7 @@
 var pm = require('../controllers/db-manager')('projects');
+var protected = require('../modules/auth').protectView;
 
-module.exports = function (loggedIn) {
+module.exports = (function () {
 	var router = require('express').Router();
 	/** Project Views */
 	router.get('/',
@@ -25,14 +26,12 @@ module.exports = function (loggedIn) {
 
 		});
 
-	router.get('/create',
-		loggedIn,
+	router.get('/create', protected,
 		function (req, res) {
 			res.render('proj/proj-create');
 		});
 
-	router.get('/update/:id',
-		// TODO:	loggedIn,
+	router.get('/update/:id', protected,
 		function (req, res) {
 			pm.getOne(req.params.id, function (dbres) {
 				res.render('proj/proj-update', { b: dbres });
@@ -43,7 +42,7 @@ module.exports = function (loggedIn) {
 
 
 	// NOTE: this is a form/multipart request not a JSON api call.
-	router.post('/', function (req, res) {
+	router.post('/', protected, function (req, res) {
 
 		var imageFile = req.files.image;
 		var uploadsFolderName = 'uploads'
@@ -72,4 +71,4 @@ module.exports = function (loggedIn) {
 	});
 
 	return router;
-}
+})();

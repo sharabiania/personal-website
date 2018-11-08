@@ -3,7 +3,11 @@ var Strategy = require('passport-local').Strategy;
 
 var um = require('../controllers/user-manager.js');
 module.exports = {
-	loggedIn: function (req, res, next) {
+	protectAPI: function(req, res, next){
+		if(req.user) next();
+		else res.sendStatus(401);
+	},
+	protectView: function (req, res, next) {
 		// Handle redirecturl in query string.
 
 		if (req.user) {
