@@ -1,0 +1,24 @@
+extends ../shared/layout
+block styles
+	style.
+		.card-columns {
+			-webkit-column-count: 5;
+			-moz-column-count: 5;
+			column-count: 5;
+		}
+block content
+
+	if(preview)
+		.text-right
+			a.btn.btn-light(href='/skills') Exit preview
+		br
+	.card-columns
+		each val, index in skills
+			.card.border-light
+				.card-body
+					h6 #{val.name}
+					.progress(style='height:5px;')
+						.progress-bar.bg-info(role='progressbar', style='width: '+ val.rate*20+ '%', aria-valuenow=val.rate, aria-valuemin='0', aria-valuemax='5')
+			
+		//- END for loop
+

@@ -4,6 +4,8 @@ module.exports = function (app) {
 	auth.auth(app);
 	app.use('/blog', require('./blog-router'));
 	app.use('/project', require('./proj-router'));
+	app.use('/skill', require('./skil-router'));
+
 	app.use('/', require('./blog-api'));
 	app.use('/', require('./proj-api'));	
 

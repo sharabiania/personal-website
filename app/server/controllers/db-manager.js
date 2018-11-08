@@ -38,7 +38,21 @@ module.exports = function (collectionName) {
 		},
 
 
+		find: function(uip, callback){
+			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+				if(err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				dbo.collection(collectionName).find().toArray(function(err, res){
+					if(err) throw err;
+					db.close();
+					callback(res);
+				});
+			});
+		},
+		
+
 		/**
+		 * Rename this since it aggregares likes
 		 * @uip 
 		 */
 		getAll: function (uip, callback) {
