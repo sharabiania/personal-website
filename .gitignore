@@ -1,3 +1,4 @@
 # Ignore node modules folder
 node_modules/
 uploads/
+.vscode/

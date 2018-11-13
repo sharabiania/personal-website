@@ -7,10 +7,7 @@ module.exports = (function () {
 	router.get('/',
 		function (req, res) {
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-			console.log('hello there');
 			sm.find(ip, function (dbres) {
-				console.log('db response is:');
-				console.log(dbres);
 				var preview = false;
 				if (req.query.p == 1) {
 					preview = true;
