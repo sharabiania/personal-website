@@ -37,6 +37,27 @@ module.exports = function (collectionName) {
 			});
 		},
 
+		getSkills: function(callback)
+		{
+			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+				if(err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				dbo.collection('categories').aggregate(
+					[{$lookup:
+				       {
+				         from: 'skills',
+				         localField: 'code',
+				         foreignField: 'cat',
+				         as: 'items'
+					   }
+					}])
+					.toArray(function(dberr, dbres){
+					if(dberr) throw dberr;
+					db.close();
+					callback(dbres);
+				});
+			});
+		},
 
 		find: function(uip, callback){
 			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){

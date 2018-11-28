@@ -2,3 +2,5 @@
 node_modules/
 uploads/
 .vscode/
+.scannerwork/
+sonar-project.properties

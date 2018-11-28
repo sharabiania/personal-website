@@ -12,13 +12,18 @@ block content
 		.text-right
 			a.btn.btn-light(href='/skills') Exit preview
 		br
-	.card-columns
-		each val, index in skills
-			.card.border-light
-				.card-body
-					h6 #{val.name}
-					.progress(style='height:5px;')
-						.progress-bar.bg-info(role='progressbar', style='width: '+ val.rate*20+ '%', aria-valuenow=val.rate, aria-valuemin='0', aria-valuemax='5')
-			
+	each c in cats
+		strong.text-capitalize #{c.name}
+		p #{c.desc}
+	
+		if c.items
+			.card-columns
+				each val in c.items
+					.card.border-light
+						.card-body
+							small #{val.name}
+							.progress(style='height:5px;')
+								.progress-bar.bg-info(role='progressbar', style='width: '+ val.rate*20+ '%', aria-valuenow=val.rate, aria-valuemin='0', aria-valuemax='5')
+		br
 		//- END for loop
 

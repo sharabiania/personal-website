@@ -7,20 +7,21 @@ module.exports = (function () {
 	router.get('/',
 		function (req, res) {
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-			sm.find(ip, function (dbres) {
+			sm.getSkills(function (dbres) {
+			
 				var preview = false;
 				if (req.query.p == 1) {
 					preview = true;
 				}
 				if (req.user) {
 					if (preview) {
-						res.render('skil/skil-preview', { 'skills': dbres, 'authenticated': true, 'preview': true });
+						res.render('skil/skil-preview', { 'cats': dbres, 'authenticated': true, 'preview': true });
 					}
 					else
-						res.render('skil/skil-manage', { 'skills': dbres, 'authenticated': true });
+						res.render('skil/skil-manage', { 'cats': dbres, 'authenticated': true });
 				}
 				else
-					res.render('skil/skil-preview', { 'skills': dbres, 'authenticated': false, 'preview': false });
+					res.render('skil/skil-preview', { 'cats': dbres, 'authenticated': false, 'preview': false });
 			});
 
 		});
