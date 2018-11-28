@@ -16,12 +16,12 @@ html
 					return ms[rd.getMonth()] + ' ' + rd.getDay() + ', ' + rd.getFullYear();
 				}
 	body
-		
-			
 		.content
+			.row.bg-dark
+				.col-8.offset-2
+						include nav.pug
 			.row
 				.col-8.offset-2
-					include nav.pug
 					<hr/>
 					block content
 
