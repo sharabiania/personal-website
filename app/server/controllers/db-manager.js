@@ -66,7 +66,8 @@ module.exports = function (collectionName) {
 				dbo.collection(collectionName).find().toArray(function(err, res){
 					if(err) throw err;
 					db.close();
-					callback(res);
+					if(callback)
+						callback(res);
 				});
 			});
 		},
