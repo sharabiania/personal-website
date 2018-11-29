@@ -39,8 +39,6 @@ module.exports = {
 		 * at `req.user` in route handlers after authentication.
 		 */
 		passport.use(new Strategy(function (username, password, cb) {
-			console.log('passport.use.local-strategy...');
-			console.log(um);
 			um.findByUsername(username, function (err, user) {
 				if (err) {
 					return cb(err);
@@ -65,12 +63,10 @@ module.exports = {
 		 * deserializing.
 		 */
 		passport.serializeUser(function (user, cb) {
-			console.log('serialize user...');
 			cb(null, user._id);
 		});
 
 		passport.deserializeUser(function (id, cb) {
-			console.log('deserialize user...');
 			um.findById(id, function (err, user) {
 				cb(null, user);
 			});

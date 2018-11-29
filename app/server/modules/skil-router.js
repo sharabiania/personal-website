@@ -35,7 +35,9 @@ module.exports = (function () {
 	router.get('/create',
 		protected,
 		function (req, res) {
-			res.render('skil/skil-create');
+			sm.getAllFrom('categories', function(dbres){
+				res.render('skil/skil-create', {cats: dbres});
+			})	
 		});
 
 	router.get('/update/:id', protected,
@@ -45,7 +47,15 @@ module.exports = (function () {
 			});
 
 		});
-	/** END Blog Views */
+	/** END Skills Views */
+
+	router.post('/', protected, function(req, res){
+		var obj = {name: req.body.name, rate: req.body.rate, cat: req.body.cat};
+		console.log('obj is:', obj);
+		sm.post(obj, function(){
+			res.redirect('/skill');
+		});
+	});
 
 
 

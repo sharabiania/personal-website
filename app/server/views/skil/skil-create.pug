@@ -1,0 +1,34 @@
+extends ../shared/layout
+
+block content
+	.row
+		.col-6.offset-3
+			.card
+				.card-body
+					form(action='/skill', method='POST', enctype="multipart/form-data" onsubmit='postProj()')
+						input.form-control(name='name', id='name', placeholder='Skill name', required='required')
+						br
+						select.form-control(name='rate')
+							option(value='1') 1 Star
+							option(value='2') 2 Stars										
+							option(value='3') 3 Stars										
+							option(value='4') 4 Stars
+							option(value='5') 5 Stars
+						br
+						select.form-control.text-capitalize(name='cat')
+							each c in cats
+								option.text-capitalize(value=c.code) #{c.name}
+						br
+						div(style='text-align:right')
+								a.btn.btn-light(href='/skill') Cancel
+								| 
+								a.btn.btn-dark(href='#') Preview
+								| 
+								button.btn.btn-primary(id='btn' type='submit') Post
+block scripts
+	script.
+		function postProj() {
+			var btn = document.getElementById('btn');
+			btn.disabled = true;
+			btn.innerText = 'Posting...';
+		}

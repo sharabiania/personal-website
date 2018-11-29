@@ -7,7 +7,8 @@ module.exports = function (app) {
 	app.use('/skill', require('./skil-router'));
 
 	app.use('/', require('./blog-api'));
-	app.use('/', require('./proj-api'));	
+	app.use('/', require('./proj-api'));
+	app.use('/', require('./skil-api'));
 
 	app.get('/contact', function(req, res){
 		res.render('contact', {sent: false});
