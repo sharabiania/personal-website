@@ -17,13 +17,37 @@ exports.findByUsername = function(username, cb) {
 	});
 }
 
-exports.findById = function(id, cb) {
+exports.findUserById = function(id, cb) {
 	mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
 		if(err) throw err;
 		var dbo = db.db(process.env.DB_NAME);
 		dbo.collection('users').findOne({_id:ObjectId(id)}, function(dberr, dbres){
 			db.close();
 			cb(dberr, dbres);
+		});
+	});
+}
+
+exports.findContent = function(id, cb) {
+	mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+		if(err) throw err;
+		var dbo = db.db(process.env.DB_NAME);
+		dbo.collection('content').findOne({_id:id}, function(dberr, dbres){
+			db.close();
+			if(dberr) throw dberr;
+			cb(dbres);
+		});
+	});
+}
+
+exports.upsertContent = function(id, obj, cb){
+	mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+		if(err) throw err;
+		var dbo = db.db(process.env.DB_NAME);
+		dbo.collection('content').updateOne({_id:id}, {$set: obj}, {upsert : true}, function(dberr, dbres){
+			db.close();
+			if(dberr) throw dberr;
+			if(cb) cb(dbres);
 		});
 	});
 }

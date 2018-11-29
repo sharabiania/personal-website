@@ -67,8 +67,15 @@ module.exports = {
 		});
 
 		passport.deserializeUser(function (id, cb) {
-			um.findById(id, function (err, user) {
+			um.findUserById(id, function (err, user) {
 				cb(null, user);
+			});
+		});
+
+		// TODO: move to a proper place
+		app.post('/', this.protectView, function(req, res){
+			um.upsertContent('home', {content: req.body.content}, function(){
+				res.redirect('/');
 			});
 		});
 
@@ -76,7 +83,9 @@ module.exports = {
 		app.get('/', function (req, res) {
 			var isauth = false;
 			if (req.user) isauth = true;
-			res.render('index', { title: 'Hey', message: 'Hello there!', 'authenticated': isauth });
+			um.findContent('home', function(dbres){
+				res.render('index', { homeContent:dbres.content, authenticated: isauth });
+			});
 		});
 
 		/** Authentication Views */
@@ -89,7 +98,9 @@ module.exports = {
 		app.post('/login',
 			passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }),
 			function (req, res) {
-				res.render('index', { authenticated: true });
+				um.findContent('home', function(dbres){
+					res.render('index', { homeContent:dbres.content, authenticated: true });
+				});
 			}
 		);
 

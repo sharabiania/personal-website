@@ -73,6 +73,19 @@ module.exports = function (collectionName) {
 			});
 		},
 		
+		findById: function(collection, id, cb){
+			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+				if(err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				dbo.collection(collection).find({_id:id}).toArray(function(err, res){
+					if(err) throw err;
+					db.close();
+					if(cb)
+						cb(res);
+				});
+			});
+		},
+
 		getAllFrom: function(collection, cb){
 			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
 				if(err) throw err;
