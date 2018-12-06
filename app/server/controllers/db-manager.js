@@ -46,7 +46,7 @@ module.exports = function (collectionName) {
 					function (err, res) {
 						if (err) throw err;
 						db.close();
-						callback(res);
+						if (callback) callback(res);
 					});
 			});
 		},

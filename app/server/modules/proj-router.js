@@ -34,7 +34,7 @@ module.exports = (function () {
 	router.get('/update/:id', protected,
 		function (req, res) {
 			pm.getOne(req.params.id, function (dbres) {
-				res.render('proj/proj-update', { b: dbres });
+				res.render('proj/proj-update', { proj: dbres });
 			});
 
 		});
@@ -65,6 +65,34 @@ module.exports = (function () {
 			'images': [{ 'path': uploadPath, 'uri': '/' + uploadsFolderName + '/' + fileName }]
 		};
 		pm.post(obj, function (dbres) {
+			res.redirect('/project');
+		});
+
+	});
+
+	router.post('/update/:id', protected, function (req, res) {
+
+		var imageFile = req.files.image;
+		var uploadsFolderName = 'uploads'
+		var fileName = imageFile.name;
+		// TODO: IMPORTANT get the path to the app folder instead of doing /../../
+		var uploadDir = __dirname + '/../../public/' + uploadsFolderName + '/';
+		uploadPath = uploadDir + fileName;
+		var fs = require('fs');
+		if (!fs.existsSync(uploadDir))
+			fs.mkdirSync(uploadDir);
+
+		imageFile.mv(uploadPath, function (err) {
+			if (err) {
+				return res.status(500).send(err);
+			}
+		});
+		var obj = {
+			'title': req.body.title,
+			'desc': req.body.desc,
+			'images': [{ 'path': uploadPath, 'uri': '/' + uploadsFolderName + '/' + fileName }]
+		};
+		pm.update(req.params.id, obj, function (dbres) {
 			res.redirect('/project');
 		});
 
