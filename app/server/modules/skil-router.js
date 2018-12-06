@@ -1,5 +1,7 @@
 var sm = require('../controllers/db-manager')('skills');
-var protected = require('../modules/auth').protectView;
+var protectView = require('../modules/auth').protectView;
+var ObjectId = require('mongodb').ObjectID;
+
 
 module.exports = (function () {
 	var router = require('express').Router();
@@ -33,31 +35,43 @@ module.exports = (function () {
 		});
 
 	router.get('/create',
-		protected,
+		protectView,
 		function (req, res) {
 			sm.getAllFrom('categories', function(dbres){
 				res.render('skil/skil-create', {cats: dbres});
 			})	
 		});
 
-	router.get('/update/:id', protected,
+	
+
+	router.get('/update/:id', protectView,
 		function (req, res) {
-			sm.getOne(req.params.id, function (dbres) {
-				res.render('skil/skil-update', { b: dbres });
-			});
+			sm.getAllFrom('categories', function(c){
+				
+				sm.getOne(req.params.id, function (dbres) {
+					res.render('skil/skil-update', { skil: dbres, cats: c });
+				});
+			})	
+			
 
 		});
 	/** END Skills Views */
 
-	router.post('/', protected, function(req, res){
-		var obj = {name: req.body.name, rate: req.body.rate, cat: req.body.cat};
-		console.log('obj is:', obj);
+	router.post('/create', protectView, function(req, res){
+		var obj = {name: req.body.name, rate: req.body.rate, cat: ObjectId(req.body.cat)};
 		sm.post(obj, function(){
 			res.redirect('/skill');
 		});
 	});
 
+	router.post('/update/:id', protectView, function(req, res){
+		var obj = {name: req.body.name, rate: req.body.rate, cat: ObjectId(req.body.cat)};
 
+		sm.update(req.params.id, obj, function(dbres){
+			//res.render('cat/cat-create', {res: dbres});
+			res.redirect('/skill');
+		});
+	});
 
 	return router;
 })();

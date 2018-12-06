@@ -10,13 +10,14 @@ block content
 
 	if(preview)
 		.text-right
-			a.btn.btn-light(href='/skills') Exit preview
+			a.btn.btn-light(href='/skill') Exit preview
 		br
 	each c in cats
-		strong.text-capitalize #{c.name}
-		p #{c.desc}
-	
-		if c.items
+		if c.items && c.items.length > 0
+			strong.text-capitalize #{c.name}
+			p #{c.desc}
+		
+			
 			.card-columns
 				each val in c.items
 					.card.border-light

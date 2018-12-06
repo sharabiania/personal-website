@@ -5,8 +5,8 @@ block content
 		.col-6.offset-3
 			.card
 				.card-body
-					form(method='POST', enctype="multipart/form-data" onsubmit='postProj()')
-						input.form-control(name='name', id='name', placeholder='Skill name', required='required')
+					form(action=skil._id, method='POST', enctype="multipart/form-data" onsubmit='postProj()')
+						input.form-control(value=skil.name name='name', id='name', placeholder='Skill name', required='required')
 						br
 						select.form-control(name='rate')
 							option(value='1') 1 Star

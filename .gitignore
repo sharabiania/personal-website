@@ -2,9 +2,6 @@
 node_modules/
 uploads/
 .vscode/
-<<<<<<< HEAD
 deploy.sh
-=======
 .scannerwork/
 sonar-project.properties
->>>>>>> 7b82f14c0d053b4ba950aba2d5eb21d1da020b91

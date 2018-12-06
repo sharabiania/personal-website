@@ -7,7 +7,20 @@ process.env.DB_NAME = 'personal-website';
 
 module.exports = function (collectionName) {
 	var module = {
-		// TODO: rename to insertOne
+		insertOne: function(collection, obj, cb){
+			obj.created = (new Date()).toISOString();
+			mongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (err, db) {
+				if (err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				
+				dbo.collection(collection).insertOne(obj, function (err, res) {
+					if (err) throw err;
+					db.close();
+					if(cb) cb(res);
+				});
+			});
+		},
+
 		post: function (obj, callback) {
 			obj.created = (new Date()).toISOString();
 			mongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (err, db) {
@@ -47,7 +60,7 @@ module.exports = function (collectionName) {
 					[{$lookup:
 				       {
 				         from: 'skills',
-				         localField: 'code',
+				         localField: '_id',
 				         foreignField: 'cat',
 				         as: 'items'
 					   }
@@ -107,7 +120,6 @@ module.exports = function (collectionName) {
 			mongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (err, db) {
 				if (err) throw err;
 				var dbo = db.db(process.env.DB_NAME);
-				console.log('getting all from ' + collectionName);
 				dbo.collection(collectionName)
 					.aggregate([{
 						$addFields: { 

@@ -5,6 +5,7 @@ module.exports = function (app) {
 	app.use('/blog', require('./blog-router'));
 	app.use('/project', require('./proj-router'));
 	app.use('/skill', require('./skil-router'));
+	app.use('/category', require('./cat-router'));
 
 	app.use('/', require('./blog-api'));
 	app.use('/', require('./proj-api'));

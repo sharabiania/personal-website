@@ -1,0 +1,25 @@
+extends ../shared/layout
+
+block content
+	.row
+		.col-6.offset-3
+			.card
+				.card-body
+					form(action='create', method='POST', enctype="multipart/form-data" onsubmit='postProj()')
+						input.form-control(name='name', id='name', placeholder='Enter category name', required='required')
+						br
+						textarea.form-control(name='desc' placeholder='Enter description for the skill category...')
+						br
+						div(style='text-align:right')
+								a.btn.btn-light(href='/category') Cancel
+								| 
+								button.btn.btn-primary(id='btn' type='submit') Post
+				if(res)
+					.card-footer #{res}
+block scripts
+	script.
+		function postProj() {
+			var btn = document.getElementById('btn');
+			btn.disabled = true;
+			btn.innerText = 'Posting...';
+		}

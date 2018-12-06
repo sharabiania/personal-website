@@ -3,21 +3,20 @@ extends ../shared/layout
 block content
 
 	div.text-right
-		a.btn.btn-light(href='/blog/create') Write a new blog
-		| 
-		a.btn.btn-light(href='/blog?p=1') Preview
+		a.btn.btn-light(href='/category/create') Add a Category
+	
 	br
 	table.table
-		for val in blogs
+		for val in cats
 			tr
 				td 
 					.media
 						.media-body
-							h5.mr-3 #{val.title}
-							| #{val.desc }
+							h5.mr-3 #{val.name}
+							| #{val.desc}
 				td.text-right
 					div.btn-group.btn-group-sm(role='group')
-						a.btn.btn-warning.btn-sm(href='/blog/update/'+val._id) Update
+						a.btn.btn-warning.btn-sm(href='/category/update/'+val._id) Update
 						button.btn.btn-danger.btn-sm(onclick='removeBlog("'+ val._id +'")') Delete
 
 block scripts
@@ -29,7 +28,7 @@ block scripts
 		    ({
 		        type: "DELETE",
 		        //the url where you want to sent the userName and password to
-				url: '/api/blog/' + id,
+				url: '/api/skill/' + id,
 				contentType: 'application/json',
 		        dataType: 'json',    
 		        success: function (res) {			
