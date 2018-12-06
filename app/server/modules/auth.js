@@ -39,8 +39,6 @@ module.exports = {
 		 * at `req.user` in route handlers after authentication.
 		 */
 		passport.use(new Strategy(function (username, password, cb) {
-			console.log('passport.use.local-strategy...');
-			console.log(um);
 			um.findByUsername(username, function (err, user) {
 				if (err) {
 					return cb(err);
@@ -65,14 +63,19 @@ module.exports = {
 		 * deserializing.
 		 */
 		passport.serializeUser(function (user, cb) {
-			console.log('serialize user...');
 			cb(null, user._id);
 		});
 
 		passport.deserializeUser(function (id, cb) {
-			console.log('deserialize user...');
-			um.findById(id, function (err, user) {
+			um.findUserById(id, function (err, user) {
 				cb(null, user);
+			});
+		});
+
+		// TODO: move to a proper place
+		app.post('/', this.protectView, function(req, res){
+			um.upsertContent('home', {content: req.body.content}, function(){
+				res.redirect('/');
 			});
 		});
 
@@ -80,7 +83,9 @@ module.exports = {
 		app.get('/', function (req, res) {
 			var isauth = false;
 			if (req.user) isauth = true;
-			res.render('index', { title: 'Hey', message: 'Hello there!', 'authenticated': isauth });
+			um.findContent('home', function(dbres){
+				res.render('index', { homeContent:dbres.content, authenticated: isauth });
+			});
 		});
 
 		/** Authentication Views */
@@ -93,7 +98,9 @@ module.exports = {
 		app.post('/login',
 			passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }),
 			function (req, res) {
-				res.render('index', { authenticated: true });
+				um.findContent('home', function(dbres){
+					res.render('index', { homeContent:dbres.content, authenticated: true });
+				});
 			}
 		);
 

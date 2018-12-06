@@ -1,15 +1,19 @@
 extends shared/layout
 
 block content
-   
-    .jumbotron
-        h1 Ali Sharabiani
-        p Hi there! My name is Ali and I'm a software developer.
-        p 
-            | Currently trying to learn how to make a website with 
-            strong MongoDB
-            |, 
-            strong NodeJS
-            |. I am also having fun with 
-            strong Pug
-            |.
+	if(!authenticated)
+		.jumbotron !{homeContent}
+	else
+		.jumbotron
+			form(action='/'  method='POST', enctype="multipart/form-data" onsubmit='post()')
+				textarea.form-control(name='content' placeholder='Enter the text to be shown in the home page. Html is allowed.') #{homeContent}
+				br
+				button.btn.btn-primary(id='btn' type='submit') Post
+        
+block scripts
+	script.
+		function post() {
+			var btn = document.getElementById('btn');
+			btn.disabled = true;
+			btn.innerText = 'Posting...';
+		}

@@ -24,6 +24,11 @@
 	column-count: 2;
 }
 
+.nav-item {
+	margin-left:5px;
+	margin-right:5px;
+}
+
 @-webkit-keyframes spin {
 	0% {
 		-webkit-transform: rotate(0deg);

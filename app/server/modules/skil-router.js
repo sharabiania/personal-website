@@ -7,28 +7,37 @@ module.exports = (function () {
 	router.get('/',
 		function (req, res) {
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-			sm.find(ip, function (dbres) {
-				var preview = false;
-				if (req.query.p == 1) {
-					preview = true;
-				}
-				if (req.user) {
+			var preview = false;
+			if (req.query.p == 1) {
+				preview = true;
+			}
+			if (req.user) {
+
 					if (preview) {
-						res.render('skil/skil-preview', { 'skills': dbres, 'authenticated': true, 'preview': true });
+						sm.getSkills(function(dbres){
+							res.render('skil/skil-preview', { 'cats': dbres, 'authenticated': true, 'preview': true });
+						});						
 					}
-					else
-						res.render('skil/skil-manage', { 'skills': dbres, 'authenticated': true });
-				}
-				else
-					res.render('skil/skil-preview', { 'skills': dbres, 'authenticated': false, 'preview': false });
-			});
+					else {
+						sm.find(ip, function(dbres){
+							res.render('skil/skil-manage', { 'skills': dbres, 'authenticated': true });
+						});
+					}
+			}
+			else
+				sm.getSkills(function(dbres){
+					res.render('skil/skil-preview', { 'cats': dbres, 'authenticated': false, 'preview': false });
+				});
+				
 
 		});
 
 	router.get('/create',
 		protected,
 		function (req, res) {
-			res.render('skil/skil-create');
+			sm.getAllFrom('categories', function(dbres){
+				res.render('skil/skil-create', {cats: dbres});
+			})	
 		});
 
 	router.get('/update/:id', protected,
@@ -38,7 +47,15 @@ module.exports = (function () {
 			});
 
 		});
-	/** END Blog Views */
+	/** END Skills Views */
+
+	router.post('/', protected, function(req, res){
+		var obj = {name: req.body.name, rate: req.body.rate, cat: req.body.cat};
+		console.log('obj is:', obj);
+		sm.post(obj, function(){
+			res.redirect('/skill');
+		});
+	});
 
 
 

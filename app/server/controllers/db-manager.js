@@ -7,6 +7,7 @@ process.env.DB_NAME = 'personal-website';
 
 module.exports = function (collectionName) {
 	var module = {
+		// TODO: rename to insertOne
 		post: function (obj, callback) {
 			obj.created = (new Date()).toISOString();
 			mongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (err, db) {
@@ -37,6 +38,27 @@ module.exports = function (collectionName) {
 			});
 		},
 
+		getSkills: function(callback)
+		{
+			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+				if(err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				dbo.collection('categories').aggregate(
+					[{$lookup:
+				       {
+				         from: 'skills',
+				         localField: 'code',
+				         foreignField: 'cat',
+				         as: 'items'
+					   }
+					}])
+					.toArray(function(dberr, dbres){
+					if(dberr) throw dberr;
+					db.close();
+					callback(dbres);
+				});
+			});
+		},
 
 		find: function(uip, callback){
 			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
@@ -45,11 +67,36 @@ module.exports = function (collectionName) {
 				dbo.collection(collectionName).find().toArray(function(err, res){
 					if(err) throw err;
 					db.close();
-					callback(res);
+					if(callback)
+						callback(res);
 				});
 			});
 		},
 		
+		findById: function(collection, id, cb){
+			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+				if(err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				dbo.collection(collection).find({_id:id}).toArray(function(err, res){
+					if(err) throw err;
+					db.close();
+					if(cb)
+						cb(res);
+				});
+			});
+		},
+
+		getAllFrom: function(collection, cb){
+			mongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function(err, db){
+				if(err) throw err;
+				var dbo = db.db(process.env.DB_NAME);
+				dbo.collection(collection).find().toArray(function(err, res){
+					if(err) throw err;
+					db.close();
+					if(cb) cb(res);
+				});
+			});
+		},
 
 		/**
 		 * Rename this since it aggregares likes

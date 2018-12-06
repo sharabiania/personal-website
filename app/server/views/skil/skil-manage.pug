@@ -1,0 +1,46 @@
+extends ../shared/layout
+
+block content
+
+	div.text-right
+		a.btn.btn-light(href='/skill/create') Add a Skill
+		| 
+		a.btn.btn-light(href='/skill?p=1') Preview
+	br
+	table.table
+		for val in skills
+			tr
+				td 
+					.media
+						.media-body
+							h5.mr-3 #{val.name}
+							| #{val.rate}
+				td.text-right
+					div.btn-group.btn-group-sm(role='group')
+						a.btn.btn-warning.btn-sm(href='/skill/update/'+val._id) Update
+						button.btn.btn-danger.btn-sm(onclick='removeBlog("'+ val._id +'")') Delete
+
+block scripts
+	script.
+		function removeBlog(id){
+			var td = event.target.parentNode.parentNode;
+			td.style.display = 'none';
+			$.ajax
+		    ({
+		        type: "DELETE",
+		        //the url where you want to sent the userName and password to
+				url: '/api/skill/' + id,
+				contentType: 'application/json',
+		        dataType: 'json',    
+		        success: function (res) {			
+					   var tr = td.parentNode;
+					   tr.parentNode.removeChild(tr);
+				},
+				error: function(res){
+					td.style.display = '';
+					console.log(res);
+				}
+				
+		    })
+		}
+			
