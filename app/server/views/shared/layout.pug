@@ -11,7 +11,7 @@ html
 		script.
 			function toReadableDate(d){
 					if(!d) return '';
-					var ms = ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+					var ms = ["Jan", "Feb", "Mar", "Apr", 'May', "Jun", "Jul", 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 					var rd = new Date(d);
 					return ms[rd.getMonth()] + ' ' + rd.getDay() + ', ' + rd.getFullYear();
 				}

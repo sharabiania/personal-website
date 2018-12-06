@@ -1,7 +1,13 @@
-# Ignore node modules folder
+# Ignore node modules folder:
 node_modules/
+# User uploaded content folder (ex: project images...):
 uploads/
+# Visual Studio Code files:
 .vscode/
+# Deployment Script:
 deploy.sh
+# Sonar Qube files:
 .scannerwork/
 sonar-project.properties
+# This is PM2 config file:
+ecosystem.config.js
