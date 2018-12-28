@@ -4,11 +4,16 @@ block content
 	if(!authenticated)
 		.jumbotron !{homeContent}
 	else
-		.jumbotron
+		button.btn.btn-default(id='exit' style='display:none' onclick='exit()') Exit Preview
+		br
+		.jumbotron#jform
 			form(action='/'  method='POST', enctype="multipart/form-data" onsubmit='post()')
 				textarea.form-control(name='content' placeholder='Enter the text to be shown in the home page. Html is allowed.') #{homeContent}
 				br
 				button.btn.btn-primary(id='btn' type='submit') Post
+				| 
+				button.btn.btn-default(type='button' onclick='preview()') Preview
+			#prev
         
 block scripts
 	script.
@@ -16,4 +21,20 @@ block scripts
 			var btn = document.getElementById('btn');
 			btn.disabled = true;
 			btn.innerText = 'Posting...';
+		}
+
+		function preview(){
+			document.getElementById('exit').style.display = 'block';
+			document.getElementById('jform').firstChild.style.display = 'none';
+			var div = document.getElementById('prev');
+			div.innerHTML = document.getElementsByName('content')[0].value;
+			div.style.display = 'block';
+			
+		}
+
+		function exit(){
+			document.getElementById('exit').style.display = 'none';
+			document.getElementById('jform').firstChild.style.display = 'block';
+			var div = document.getElementById('prev');
+			div.style.display = 'none';
 		}
