@@ -14,13 +14,13 @@ module.exports = (function () {
 			});
 	});
 
-	router.get('/api/project', function (req, res) {
-		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	// router.get('/api/project', function (req, res) {
+	// 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-		pm.getAll(ip, function (dbres) {
-			res.send(dbres);
-		});
-	});
+	// 	pm.getAll(ip, function (dbres) {
+	// 		res.send(dbres);
+	// 	});
+	// });
 
 	router.delete('/api/project/:id', protected, function (req, res) {
 		pm.remove(req.params.id, function (dbres) {

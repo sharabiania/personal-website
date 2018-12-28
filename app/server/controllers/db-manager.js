@@ -114,8 +114,9 @@ module.exports = function (collectionName) {
 		/**
 		 * Rename this since it aggregares likes
 		 * @uip 
+		 * @sort sort object
 		 */
-		getAll: function (uip, callback) {
+		getAll: function (uip, sort, callback) {
 
 			mongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (err, db) {
 				if (err) throw err;
@@ -127,7 +128,7 @@ module.exports = function (collectionName) {
 							numOfLikes: { $size: { "$ifNull": ["$likes", []] } }
 						}
 					}])
-					.sort({ 'published-on': -1, created: -1 }).toArray(function (err, res) {
+					.sort(sort).toArray(function (err, res) {
 						if (err) throw err;
 						db.close();
 						callback(res);

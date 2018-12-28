@@ -8,7 +8,9 @@ block content
 				br
 				textarea.form-control(name='desc', id='desc', rows='10', placeholder='Description of your project, html permitted.', required='required') #{proj.desc}
 				br
-				input.form-control(name='image', id='image', type='file', placeholder='Upload image', accept="image/*", required='required')
+				input.form-control(name='image', id='image', type='file', placeholder='Upload image', accept="image/*")
+				br
+				input.form-control(name='order', id='order', type='number' value=proj.order)
 				br
 				div(style='text-align:right')
 					a.btn.btn-light(href='/project') Cancel

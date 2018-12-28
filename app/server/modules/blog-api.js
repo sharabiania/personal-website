@@ -36,13 +36,13 @@ module.exports = (function () {
 			});
 	});
 
-	router.get('/api/blog', function (req, res) {
-		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	// router.get('/api/blog', function (req, res) {
+	// 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-		bm.getAll(ip, function (dbres) {
-			res.send(dbres);
-		});
-	});
+	// 	bm.getAll(ip, {'published-on':-1}, function (dbres) {
+	// 		res.send(dbres);
+	// 	});
+	// });
 
 	router.delete('/api/blog/:id',protected, function (req, res) {
 		bm.remove(req.params.id, function (dbres) {

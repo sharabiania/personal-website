@@ -8,7 +8,7 @@ module.exports = (function () {
 		function (req, res) {
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-			bm.getAll(ip, function (dbres) {
+			bm.getAll(ip, {'published-on':-1, updated:-1, created:-1}, function (dbres) {
 				var preview = false;
 				if (req.query.p == 1) {
 					preview = true;
