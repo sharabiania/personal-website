@@ -9,7 +9,7 @@ block content
 	br
 	table.table
 		for val in blogs
-			tr
+			tr(class=val.published?'table-primary':'')
 				td 
 					.media
 						.media-body

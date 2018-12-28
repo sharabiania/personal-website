@@ -10,10 +10,11 @@ html
 		script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
 		script.
 			function toReadableDate(d){
+				
 					if(!d) return '';
 					var ms = ["Jan", "Feb", "Mar", "Apr", 'May', "Jun", "Jul", 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 					var rd = new Date(d);
-					return ms[rd.getMonth()] + ' ' + rd.getDay() + ', ' + rd.getFullYear();
+					return ms[rd.getMonth()] + ' ' + rd.getDate() + ', ' + rd.getFullYear();
 				}
 	body
 		.content

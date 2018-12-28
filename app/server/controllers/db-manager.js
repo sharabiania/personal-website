@@ -127,7 +127,7 @@ module.exports = function (collectionName) {
 							numOfLikes: { $size: { "$ifNull": ["$likes", []] } }
 						}
 					}])
-					.sort({ created: -1 }).toArray(function (err, res) {
+					.sort({ 'published-on': -1, created: -1 }).toArray(function (err, res) {
 						if (err) throw err;
 						db.close();
 						callback(res);

@@ -6,7 +6,10 @@ module.exports = (function () {
 	/** Blog APIs */
 
 	router.post('/api/blog', protected, function (req, res) {
-		bm.post({ 'title': req.body.title, 'desc': req.body.desc },
+		var obj = { 
+			'title': req.body.title, 'desc': req.body.desc, 
+		};
+		bm.post(obj,
 			function (dbres) {
 				res.send(dbres);
 			});
@@ -14,8 +17,20 @@ module.exports = (function () {
 	});
 
 	router.put('/api/blog/:id', protected, function (req, res) {
+	
+		var obj = { 
+			'title': req.body.title, 'desc': req.body.desc, 
+			'published' : req.body.published
+		};
+		var temp = null;
+		try{
+			temp = (new Date(req.body['published-on'])).toISOString();
+		}
+		catch{}
+		if(temp != null) obj['published-on'] = temp;
+
 		bm.update(req.params.id, 
-			{ 'title': req.body.title, 'desc': req.body.desc },
+			obj,
 			function (dbres) {
 				res.send(dbres);
 			});

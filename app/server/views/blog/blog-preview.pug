@@ -12,7 +12,7 @@ block content
 			.card-body
 				h4.card-title #{val.title}
 				p.card-text.small.text-right
-					i(class='r-date') #{val.updated || val.created}
+					i(class='r-date') #{val['published-on'] || val.updated || val.created}
 				p.card-text !{val.desc }
 				
 			.card-footer.text-right

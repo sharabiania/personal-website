@@ -7,6 +7,16 @@ block content
 			br
 			textarea.form-control(id='desc', rows='10', placeholder='Write your blog here, html permitted.') !{b.desc}
 			br
+			.form-row
+				.col
+					label(for='published-on') Published on:
+					input.form-control(id='published-on' type='date' value=b['published-on'])
+				.col
+					.form-group
+						.form-check
+							input.form-check-input(id='published' type='checkbox')
+							label.form-check-label(for='published' checked=(b.published==true)?'checked':'') Publish
+			br
 			div(style='text-align:right')
 				a.btn.btn-light(href='/blog') Cancel
 				| 
@@ -18,7 +28,12 @@ block scripts
 	script.
 		function updateblog()
 		{
-			var data = {'title' : $('#title').val(), 'desc' : $('#desc').val() }; 
+			var data = {
+				'title' : $('#title').val(), 
+				'desc' : $('#desc').val(),
+				'published-on': $('#published-on').val(),
+				'published': $('#published').prop('checked') 
+			}; 
 			$.ajax
 		    ({
 		        type: "PUT",
