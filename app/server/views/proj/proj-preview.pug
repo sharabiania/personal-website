@@ -6,25 +6,27 @@ block content
 		.text-right
 			a.btn.btn-light(href='/project') Exit preview
 	br
-	.card-columns
-		each val, index in projs
-			.card
-				if val.images
-					img.card-img-top(src=val.images[0].uri, alt="project screenshot")
+	.row
+		.col-6.offset-3
+			.card-deck(style='flex-flow:column')
+				each val, index in projs
+					.card
+						if val.images
+							img.card-img-top(src=val.images[0].uri, alt="project screenshot")
 
-				.card-body
-					h4.card-title #{val.title}
-					small.blockquote-footer.text-right(class='r-date') #{val.updated || val.created}
-					p.card-text !{val.desc}
-					
-				.card-footer.text-right
-					a.card-link(href='javascript:void(0);' class=val.liked? '':'d-none' onclick='projunlike("' + val._id + '")') unlike
-					a.card-link(href='javascript:void(0);' class=val.liked? 'd-none':'' onclick='projlike("'+ val._id +'")') like
-					|  (
-					strong  #{val.numOfLikes}
-					|  people liked this)	
-				
-
+						.card-body
+							h4.card-title #{val.title}
+							small.blockquote-footer.text-right(class='r-date') #{val.updated || val.created}
+							p.card-text !{val.desc}
+							
+						.card-footer.text-right
+							a.card-link(href='javascript:void(0);' class=val.liked? '':'d-none' onclick='projunlike("' + val._id + '")') unlike
+							a.card-link(href='javascript:void(0);' class=val.liked? 'd-none':'' onclick='projlike("'+ val._id +'")') like
+							|  (
+							strong  #{val.numOfLikes}
+							|  people liked this)	
+						
+					br
 				
 		//- END for loop
 
