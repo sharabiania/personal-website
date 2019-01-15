@@ -1,6 +1,7 @@
 doctype html
 html
 	head
+		meta(name='google-site-verification', content='zydfhKQYGqfUpt8d_1pHP8hfNSWmQLVwCgcEvKU52f0')
 		title Ali Sharabiani - Resume
 		link(rel='icon' href='/favicon.ico' )
 		link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
@@ -11,12 +12,19 @@ html
 		script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
 		script.
 			function toReadableDate(d){
-				
 					if(!d) return '';
 					var ms = ["Jan", "Feb", "Mar", "Apr", 'May', "Jun", "Jul", 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 					var rd = new Date(d);
 					return ms[rd.getMonth()] + ' ' + rd.getDate() + ', ' + rd.getFullYear();
 				}
+		// Global site tag (gtag.js) - Google Analytics
+		script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-60841611-5')
+		script.
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-60841611-5');
+
 	body
 		.content
 			.row.bg-dark
