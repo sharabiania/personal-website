@@ -8,7 +8,7 @@ app.use(fileUpload({
 
 // require('./app/server/modules/auth')(app);
 
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 4000);
 app.set('views', __dirname + '/app/server/views');
 app.set('view engine', 'pug');
 app.use(express.json());
